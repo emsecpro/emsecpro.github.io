@@ -367,11 +367,238 @@
   .empty-icon { font-size: 2.5rem; margin-bottom: 12px; }
   .empty h3 { font-size: 1.1rem; font-weight: 600; margin-bottom: 6px; }
   .empty p { font-size: 0.85rem; }
+  /* ─── Hero ─── */
+  #heroSection {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 24px;
+  }
+
+  .hero-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 20px;
+    width: 100%;
+    max-width: 640px;
+  }
+
+  .hero-logo {
+    font-size: 2.4rem;
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .hero-logo .logo-dot {
+    width: 12px;
+    height: 12px;
+  }
+
+  .hero-sub {
+    font-size: 0.85rem;
+    color: var(--muted);
+    letter-spacing: .04em;
+  }
+
+  /* ─── Social links (hero) ─── */
+  .hero-socials {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .social-link {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 7px 14px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--bg2);
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--muted);
+    text-decoration: none;
+    transition: all .15s;
+  }
+
+  .social-link svg { width: 16px; height: 16px; flex-shrink: 0; }
+  .social-link:hover { color: var(--text); border-color: var(--accent); background: var(--bg3); }
+  .social-link.htb:hover { color: #9fef00; border-color: #9fef00; }
+  .social-link.github:hover { color: #e2e8f0; border-color: #e2e8f0; }
+  .social-link.twitter:hover { color: #1d9bf0; border-color: #1d9bf0; }
+
+  /* ─── Hero search ─── */
+  .hero-search-wrap {
+    position: relative;
+    width: 100%;
+  }
+
+  .hero-search-icon {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--muted);
+    pointer-events: none;
+    font-size: 18px;
+  }
+
+  .hero-search-wrap input {
+    width: 100%;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 14px 16px 14px 46px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.9rem;
+    color: var(--text);
+    outline: none;
+    transition: border-color .15s, box-shadow .15s;
+  }
+
+  .hero-search-wrap input::placeholder { color: var(--muted); }
+
+  .hero-search-wrap input:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(224,92,58,0.12);
+  }
+
+  .hero-hint {
+    font-size: 0.72rem;
+    color: var(--muted);
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  /* ─── Sticky header socials ─── */
+  .header-socials {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-shrink: 0;
+  }
+
+  .social-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    text-decoration: none;
+    transition: all .15s;
+  }
+
+  .social-icon svg { width: 14px; height: 14px; }
+  .social-icon:hover { color: var(--text); border-color: var(--accent); background: var(--bg3); }
+  .social-icon.htb:hover { color: #9fef00; border-color: #9fef00; }
+  .social-icon.github:hover { color: #e2e8f0; border-color: #e2e8f0; }
+  .social-icon.twitter:hover { color: #1d9bf0; border-color: #1d9bf0; }
+
+  /* ─── Footer ─── */
+  footer {
+    border-top: 1px solid var(--border);
+    background: var(--bg2);
+    padding: 0 24px;
+    margin-top: 40px;
+  }
+
+  .footer-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+
+  .footer-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.78rem;
+    color: var(--muted);
+  }
+
+  .footer-left strong { color: var(--accent2); }
+  .footer-sep { color: var(--border); }
+
+  .footer-links {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .footer-link {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 10px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--muted);
+    text-decoration: none;
+    transition: all .15s;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .footer-link:hover { color: var(--text); border-color: var(--accent); background: var(--bg3); }
+  .footer-link.htb:hover { color: #9fef00; border-color: #9fef00; }
+  .footer-link.github:hover { color: #e2e8f0; border-color: #e2e8f0; }
+  .footer-link.twitter:hover { color: #1d9bf0; border-color: #1d9bf0; }
+
 </style>
 </head>
 <body>
 
-<header>
+<!-- ─── Hero (shown before search) ─── -->
+<div id="heroSection">
+  <div class="hero-inner">
+    <div class="hero-logo">
+      <span class="logo-dot"></span>
+      RedOps
+    </div>
+    <p class="hero-sub">Pentest Command Cheatsheet · AD / Web / Pivot</p>
+
+    <!-- Social links -->
+    <div class="hero-socials">
+      <a href="https://app.hackthebox.com/public/users/962022" target="_blank" class="social-link htb" title="HackTheBox — emsec">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M11.9961 0L3 5.00391V14.9961L11.9961 20L21 14.9961V5.00391L11.9961 0ZM11.9961 2.30859L18.9492 6.35742V13.6426L11.9961 17.6914L5.05078 13.6426V6.35742L11.9961 2.30859ZM11.9961 6.00586L8.00195 8.37305V13.1211L11.9961 15.4883L15.9902 13.1211V8.37305L11.9961 6.00586ZM11.9961 8.31445L13.9922 9.46289V11.7539L11.9961 12.9023L10 11.7539V9.46289L11.9961 8.31445Z" fill="currentColor"/></svg>
+        <span>emsec</span>
+      </a>
+      <a href="https://github.com/Mostafatoumi" target="_blank" class="social-link github" title="GitHub — Mostafatoumi">
+        <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+        <span>Mostafatoumi</span>
+      </a>
+      <a href="https://x.com/EmSec0" target="_blank" class="social-link twitter" title="X — EmSec0">
+        <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.737-8.835L1.254 2.25H8.08l4.259 5.63 5.905-5.63zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        <span>EmSec0</span>
+      </a>
+    </div>
+
+    <!-- Hero search -->
+    <div class="hero-search-wrap">
+      <span class="hero-search-icon">⌕</span>
+      <input id="searchInput" type="text" placeholder="search tools, commands, tags... (bloodyad, kerberos, smb...)" autocomplete="off" spellcheck="false" />
+    </div>
+    <p class="hero-hint">↑ type a tool or technique to get started</p>
+  </div>
+</div>
+
+<!-- ─── Sticky header (shown after search) ─── -->
+<header id="stickyHeader" style="display:none">
   <div class="header-inner">
     <div class="logo">
       <span class="logo-dot"></span>
@@ -379,12 +606,23 @@
     </div>
     <div class="search-wrap">
       <span class="search-icon">⌕</span>
-      <input id="searchInput" type="text" placeholder="search tools, commands, tags... (bloodyad, kerberos, smb...)" autocomplete="off" spellcheck="false" />
+      <input id="searchInputSticky" type="text" placeholder="search tools, commands, tags..." autocomplete="off" spellcheck="false" />
+    </div>
+    <div class="header-socials">
+      <a href="https://app.hackthebox.com/public/users/962022" target="_blank" class="social-icon htb" title="HackTheBox">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M11.9961 0L3 5.00391V14.9961L11.9961 20L21 14.9961V5.00391L11.9961 0ZM11.9961 2.30859L18.9492 6.35742V13.6426L11.9961 17.6914L5.05078 13.6426V6.35742L11.9961 2.30859ZM11.9961 6.00586L8.00195 8.37305V13.1211L11.9961 15.4883L15.9902 13.1211V8.37305L11.9961 6.00586ZM11.9961 8.31445L13.9922 9.46289V11.7539L11.9961 12.9023L10 11.7539V9.46289L11.9961 8.31445Z" fill="currentColor"/></svg>
+      </a>
+      <a href="https://github.com/Mostafatoumi" target="_blank" class="social-icon github" title="GitHub">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+      </a>
+      <a href="https://x.com/EmSec0" target="_blank" class="social-icon twitter" title="X / Twitter">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.737-8.835L1.254 2.25H8.08l4.259 5.63 5.905-5.63zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+      </a>
     </div>
   </div>
 </header>
 
-<div class="vars-bar">
+<div class="vars-bar" id="varsBar" style="display:none">
   <div class="vars-inner">
     <div class="vars-label">⚡ Variables — used in all commands below</div>
     <div class="vars-grid">
@@ -424,14 +662,75 @@
   </div>
 </div>
 
-<main>
+<main id="mainContent" style="display:none">
   <div class="results-meta" id="resultsMeta"></div>
   <div id="toolsContainer"></div>
 </main>
 
+<footer>
+  <div class="footer-inner">
+    <div class="footer-left">
+      <span class="logo-dot" style="width:6px;height:6px"></span>
+      <span>RedOps</span>
+      <span class="footer-sep">·</span>
+      <span>Pentest Cheatsheet by <strong>emsec</strong></span>
+    </div>
+    <div class="footer-links">
+      <a href="https://app.hackthebox.com/public/users/962022" target="_blank" class="footer-link htb">
+        <svg viewBox="0 0 24 24" fill="none" width="14" height="14"><path d="M11.9961 0L3 5.00391V14.9961L11.9961 20L21 14.9961V5.00391L11.9961 0ZM11.9961 2.30859L18.9492 6.35742V13.6426L11.9961 17.6914L5.05078 13.6426V6.35742L11.9961 2.30859ZM11.9961 6.00586L8.00195 8.37305V13.1211L11.9961 15.4883L15.9902 13.1211V8.37305L11.9961 6.00586ZM11.9961 8.31445L13.9922 9.46289V11.7539L11.9961 12.9023L10 11.7539V9.46289L11.9961 8.31445Z" fill="currentColor"/></svg>
+        HTB
+      </a>
+      <a href="https://github.com/Mostafatoumi" target="_blank" class="footer-link github">
+        <svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+        GitHub
+      </a>
+      <a href="https://x.com/EmSec0" target="_blank" class="footer-link twitter">
+        <svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.737-8.835L1.254 2.25H8.08l4.259 5.63 5.905-5.63zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        @EmSec0
+      </a>
+    </div>
+  </div>
+</footer>
+
 <script>
 let db = [];
 let vars = {};
+let hasSearched = false;
+
+const VARS = ['IP','DOMAIN','USER','PASS','HASH','PORT','TARGET_USER','TARGET'];
+
+// Load db.json
+async function loadDB() {
+  try {
+    const res = await fetch('./db.json');
+    db = await res.json();
+    render();
+  } catch (e) {
+    document.getElementById('toolsContainer').innerHTML =
+      '<div class="empty"><div class="empty-icon">⚠️</div><h3>Could not load db.json</h3><p>Make sure db.json is in the same folder as index.html</p></div>';
+  }
+}
+
+// Get query from whichever input is visible
+function getQuery() {
+  const hero = document.getElementById('searchInput');
+  const sticky = document.getElementById('searchInputSticky');
+  return hasSearched ? sticky.value.trim().toLowerCase() : hero.value.trim().toLowerCase();
+}
+
+// Show/hide hero vs results view
+function setSearchMode(active) {
+  if (active === hasSearched) return;
+  hasSearched = active;
+  document.getElementById('heroSection').style.display = active ? 'none' : 'flex';
+  document.getElementById('stickyHeader').style.display = active ? '' : 'none';
+  document.getElementById('varsBar').style.display = active ? '' : 'none';
+  document.getElementById('mainContent').style.display = active ? '' : 'none';
+  if (active) {
+    // Sync query to sticky input
+    document.getElementById('searchInputSticky').value = document.getElementById('searchInput').value;
+  }
+}
 
 const VARS = ['IP','DOMAIN','USER','PASS','HASH','PORT','TARGET_USER','TARGET'];
 
@@ -477,7 +776,7 @@ function escapeHtml(s) {
 
 function render() {
   vars = getVars();
-  const q = document.getElementById('searchInput').value.trim().toLowerCase();
+  const q = getQuery();
   const container = document.getElementById('toolsContainer');
   const meta = document.getElementById('resultsMeta');
 
@@ -579,8 +878,21 @@ document.addEventListener('click', e => {
   }
 });
 
-// Bind inputs
-document.getElementById('searchInput').addEventListener('input', render);
+// Hero search input
+document.getElementById('searchInput').addEventListener('input', e => {
+  const val = e.target.value.trim();
+  if (val) {
+    setSearchMode(true);
+    render();
+  }
+});
+
+// Sticky search input
+document.getElementById('searchInputSticky').addEventListener('input', e => {
+  render();
+});
+
+// Sync var inputs
 VARS.forEach(k => {
   const el = document.getElementById('var-' + k);
   if (el) el.addEventListener('input', render);
