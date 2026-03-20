@@ -537,14 +537,37 @@ function toggleCard(id) {
 }
 
 function copyCmd(btn, text) {
-  navigator.clipboard.writeText(text).then(() => {
+  const success = () => {
     btn.textContent = '✓ copied';
     btn.classList.add('copied');
     setTimeout(() => {
       btn.textContent = 'copy';
       btn.classList.remove('copied');
     }, 1800);
-  });
+  };
+
+  // Modern clipboard API (HTTPS / localhost)
+  if (navigator.clipboard && window.isSecureContext) {
+    navigator.clipboard.writeText(text).then(success).catch(() => fallbackCopy(text, success));
+  } else {
+    fallbackCopy(text, success);
+  }
+}
+
+function fallbackCopy(text, onSuccess) {
+  const ta = document.createElement('textarea');
+  ta.value = text;
+  ta.style.cssText = 'position:fixed;top:0;left:0;opacity:0;pointer-events:none';
+  document.body.appendChild(ta);
+  ta.focus();
+  ta.select();
+  try {
+    document.execCommand('copy');
+    onSuccess();
+  } catch (e) {
+    console.error('Copy failed', e);
+  }
+  document.body.removeChild(ta);
 }
 
 // Bind inputs
