@@ -513,7 +513,7 @@ function render() {
             <div class="cmd-desc">${c.desc}</div>
             <div class="cmd-text">${highlighted}</div>
           </div>
-          <button class="copy-btn" onclick="copyCmd(this, ${JSON.stringify(resolved)})">copy</button>
+          <button class="copy-btn" data-cmd="${escapeHtml(resolved)}">copy</button>
         </div>`;
     }).join('');
 
@@ -569,6 +569,15 @@ function fallbackCopy(text, onSuccess) {
   }
   document.body.removeChild(ta);
 }
+
+// Delegated copy handler — works with data-cmd, no JSON.stringify issues
+document.addEventListener('click', e => {
+  if (e.target.matches('.copy-btn')) {
+    const btn = e.target;
+    const text = btn.getAttribute('data-cmd');
+    copyCmd(btn, text);
+  }
+});
 
 // Bind inputs
 document.getElementById('searchInput').addEventListener('input', render);
