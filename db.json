@@ -65,7 +65,7 @@
 },
   {
     "tool": "impacket",
-    "tags": ["kerberos", "SMB", "AD", "RPC", "relay", "dump"],
+    "tags": ["kerberos", "SMB", "AD", "RPC", "relay", "dump", "mssql"],
     "commands": [
       { "desc": "SecretsDump (password)", "cmd": "impacket-secretsdump {{DOMAIN}}/{{USER}}:{{PASS}}@{{IP}}" },
       { "desc": "SecretsDump (hash)", "cmd": "impacket-secretsdump -hashes :{{HASH}} {{DOMAIN}}/{{USER}}@{{IP}}" },
@@ -82,7 +82,8 @@
       { "desc": "AddComputer", "cmd": "impacket-addcomputer {{DOMAIN}}/{{USER}}:{{PASS}} -dc-ip {{IP}} -computer-name 'FAKE$' -computer-pass 'FakePass123!'" },
       { "desc": "GetADUsers", "cmd": "impacket-GetADUsers -all {{DOMAIN}}/{{USER}}:{{PASS}} -dc-ip {{IP}}" },
       { "desc": "DComExec", "cmd": "impacket-dcomexec {{DOMAIN}}/{{USER}}:{{PASS}}@{{IP}}" },
-      { "desc": "AtExec", "cmd": "impacket-atexec {{DOMAIN}}/{{USER}}:{{PASS}}@{{IP}} 'whoami'" }
+      { "desc": "AtExec", "cmd": "impacket-atexec {{DOMAIN}}/{{USER}}:{{PASS}}@{{IP}} 'whoami'" },
+      { "desc": "MSSQL Client (password auth)", "cmd": "impacket-mssqlclient {{USER}}:'{{PASS}}'@{{TARGET}}"}
     ]
   },
   {
