@@ -732,20 +732,6 @@ function setSearchMode(active) {
   }
 }
 
-const VARS = ['IP','DOMAIN','USER','PASS','HASH','PORT','TARGET_USER','TARGET'];
-
-// Load db.json
-async function loadDB() {
-  try {
-    const res = await fetch('./db.json');
-    db = await res.json();
-    render();
-  } catch (e) {
-    document.getElementById('toolsContainer').innerHTML =
-      '<div class="empty"><div class="empty-icon">⚠️</div><h3>Could not load db.json</h3><p>Make sure db.json is in the same folder as index.html</p></div>';
-  }
-}
-
 // Get current var values
 function getVars() {
   const v = {};
@@ -771,7 +757,7 @@ function buildCmdHTML(cmd) {
 }
 
 function escapeHtml(s) {
-  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
 function render() {
@@ -803,7 +789,7 @@ function render() {
 
   container.innerHTML = filtered.map(({ tool, matchedCmds }) => {
     const id = 'tool-' + tool.tool.replace(/[^a-z0-9]/gi,'');
-    const cmdsHTML = matchedCmds.map((c, i) => {
+    const cmdsHTML = matchedCmds.map((c) => {
       const resolved = resolveCmd(c.cmd);
       const highlighted = buildCmdHTML(escapeHtml(c.cmd));
       return `
@@ -844,8 +830,6 @@ function copyCmd(btn, text) {
       btn.classList.remove('copied');
     }, 1800);
   };
-
-  // Modern clipboard API (HTTPS / localhost)
   if (navigator.clipboard && window.isSecureContext) {
     navigator.clipboard.writeText(text).then(success).catch(() => fallbackCopy(text, success));
   } else {
@@ -860,39 +844,29 @@ function fallbackCopy(text, onSuccess) {
   document.body.appendChild(ta);
   ta.focus();
   ta.select();
-  try {
-    document.execCommand('copy');
-    onSuccess();
-  } catch (e) {
-    console.error('Copy failed', e);
-  }
+  try { document.execCommand('copy'); onSuccess(); } catch(e) { console.error('Copy failed', e); }
   document.body.removeChild(ta);
 }
 
-// Delegated copy handler — works with data-cmd, no JSON.stringify issues
+// Delegated copy handler
 document.addEventListener('click', e => {
   if (e.target.matches('.copy-btn')) {
-    const btn = e.target;
-    const text = btn.getAttribute('data-cmd');
-    copyCmd(btn, text);
+    copyCmd(e.target, e.target.getAttribute('data-cmd'));
   }
 });
 
-// Hero search input
+// Hero search
 document.getElementById('searchInput').addEventListener('input', e => {
-  const val = e.target.value.trim();
-  if (val) {
+  if (e.target.value.trim()) {
     setSearchMode(true);
     render();
   }
 });
 
-// Sticky search input
-document.getElementById('searchInputSticky').addEventListener('input', e => {
-  render();
-});
+// Sticky search
+document.getElementById('searchInputSticky').addEventListener('input', () => render());
 
-// Sync var inputs
+// Var inputs
 VARS.forEach(k => {
   const el = document.getElementById('var-' + k);
   if (el) el.addEventListener('input', render);
