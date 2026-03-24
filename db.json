@@ -345,43 +345,43 @@
   "commands": [
     {
       "desc": "Basic RDP login",
-      "cmd": "xfreerdp /v:{{TARGET_IP}} /u:{{USER}} /p:'{{PASS}}' +clipboard /dynamic-resolution"
+      "cmd": "xfreerdp /v:{{IP}} /u:{{USER}} /p:'{{PASS}}' +clipboard /dynamic-resolution"
     },
     {
       "desc": "RDP with domain",
-      "cmd": "xfreerdp /v:{{TARGET_IP}} /u:{{DOMAIN}}\\{{USER}} /p:'{{PASS}}' +clipboard /dynamic-resolution"
+      "cmd": "xfreerdp /v:{{IP}} /u:{{DOMAIN}}\\{{USER}} /p:'{{PASS}}' +clipboard /dynamic-resolution"
     },
     {
       "desc": "RDP using pass-the-hash",
-      "cmd": "xfreerdp /v:{{TARGET_IP}} /u:{{USER}} /pth:{{NTHASH}} +clipboard"
+      "cmd": "xfreerdp /v:{{IP}} /u:{{USER}} /pth:{{NTHASH}} +clipboard"
     },
     {
       "desc": "RDP with certificate (smartcard auth)",
-      "cmd": "xfreerdp /v:{{TARGET_IP}} /u:{{USER}} /cert:ignore /smartcard"
+      "cmd": "xfreerdp /v:{{IP}} /u:{{USER}} /cert:ignore /smartcard"
     },
     {
       "desc": "RDP with drive sharing",
-      "cmd": "xfreerdp /v:{{TARGET_IP}} /u:{{USER}} /p:'{{PASS}}' /drive:share,{{LOCAL_PATH}}"
+      "cmd": "xfreerdp /v:{{IP}} /u:{{USER}} /p:'{{PASS}}' /drive:share,{{LOCAL_PATH}}"
     },
     {
       "desc": "RDP with full screen",
-      "cmd": "xfreerdp /v:{{TARGET_IP}} /u:{{USER}} /p:'{{PASS}}' /f"
+      "cmd": "xfreerdp /v:{{IP}} /u:{{USER}} /p:'{{PASS}}' /f"
     },
     {
       "desc": "RDP with specified resolution",
-      "cmd": "xfreerdp /v:{{TARGET_IP}} /u:{{USER}} /p:'{{PASS}}' /size:1920x1080"
+      "cmd": "xfreerdp /v:{{IP}} /u:{{USER}} /p:'{{PASS}}' /size:1920x1080"
     },
     {
       "desc": "RDP ignoring certificate warnings",
-      "cmd": "xfreerdp /v:{{TARGET_IP}} /u:{{USER}} /p:'{{PASS}}' /cert:ignore"
+      "cmd": "xfreerdp /v:{{IP}} /u:{{USER}} /p:'{{PASS}}' /cert:ignore"
     },
     {
       "desc": "RDP with clipboard and sound",
-      "cmd": "xfreerdp /v:{{TARGET_IP}} /u:{{USER}} /p:'{{PASS}}' +clipboard /sound"
+      "cmd": "xfreerdp /v:{{IP}} /u:{{USER}} /p:'{{PASS}}' +clipboard /sound"
     },
     {
       "desc": "RDP through proxy (proxychains)",
-      "cmd": "proxychains xfreerdp /v:{{TARGET_IP}} /u:{{USER}} /p:'{{PASS}}'"
+      "cmd": "proxychains xfreerdp /v:{{IP}} /u:{{USER}} /p:'{{PASS}}'"
     }
   ]
 },
